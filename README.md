@@ -11,7 +11,7 @@ Corrige imensos problemas existentes nas legendas SRT:
 - Corrige concerteza para com certeza.
 - Corrige porfavor para por Favor.
 - Aplica estilo 'Música' às linhas que contém o símbolo musical e aplica-o com todas as suas regras.
-- E corrige problema de linhas sobrepostas existentes nos SRTs.
+- Corrige problema de linhas sobrepostas existentes nos SRTs.
 -	v5: Corrige espaço antes da "," ou ";".
 -	v5: Corrige problema de reticências. Caso haja 2 pontos ou mais que 3 pontos.
 -	v5: Corrige problema de duplo espaço. Mais que 2 espaços ele ignora. (Visto poder ser typesetting)

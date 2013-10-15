@@ -19,7 +19,7 @@ Corrige imensos problemas existentes nas legendas SRT:
 
 Por fazer
 -----------------
-* Creio que já está tudo feito, mas estarei disposto a melhorar se houver dicas para tal.
+* Melhorar a colocação dos símbolos musicais em linhas com \N !
 
 
 Como instalar

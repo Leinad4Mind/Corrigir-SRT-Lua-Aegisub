@@ -10,7 +10,7 @@
 script_name = "Corrigir SRT"
 script_description = "Adiciona espaço onde existe reticências no início da frase. Corrige os hífens. Corrige as aspas. Corrige I por l. Corrige á por à. Corrige a quando é há. Corrige concerteza para Com certeza. Corrige Porfavor para Por Favor. Aplica estilo 'Música' com todas as suas regras. E corrige problema de linhas sobrepostas existentes nos SRTs."
 script_author = "Leinad4Mind"
-script_version = "5.0"
+script_version = "5.1"
 
 include("karaskel.lua")
 
@@ -122,18 +122,18 @@ function corrigir(subs,sel)
 			line.text = line.text:gsub("porfavor","por favor")
 			line.text = line.text:gsub("Porfavor","Por favor")
 			--Onomatopeias - FUNCIONA
-			line.text = line.text:gsub("H([eE]+)[yY]","Ei")
-			line.text = line.text:gsub("h([eE]+)[yY]","ei")
-			line.text = line.text:gsub("Huh","Hum")
-			line.text = line.text:gsub("huh","hum")
-			line.text = line.text:gsub("W([o]+)[Ww]","Uau")
-			line.text = line.text:gsub("w([o]+)[Ww]","uau")
-			line.text = line.text:gsub("H([m]+)","Hmm")
-			line.text = line.text:gsub("h([m]+)","hmm")
-			line.text = line.text:gsub("O([w]+)","Au")
-			line.text = line.text:gsub("o([w]+)","au")
-			line.text = line.text:gsub("Waah","Buá")
-			line.text = line.text:gsub("waah","buá")
+			line.text = line.text:gsub("H[Ee]+[Yy]+([ .,?!])","Ei%1")
+			line.text = line.text:gsub("h[e]+[y]+([ .,?!])","ei%1")
+			line.text = line.text:gsub("[H]+[Uu]+[Hh]+([ .,?!])","Hum%1")
+			line.text = line.text:gsub("[h]+[u]+[h]+([ .,?!])","hum%1")
+			line.text = line.text:gsub("[W]+[Oo]+[Ww]+([ .,?!])","Uau%1")
+			line.text = line.text:gsub("[w]+[o]+[w]+([ .,?!])","uau%1")
+			line.text = line.text:gsub("[H]+[Mm]+([ .,?!])","Hmm%1")
+			line.text = line.text:gsub("[h]+[m]+([ .,?!])","hmm%1")
+			line.text = line.text:gsub("[O]+[Ww]+([ .,?!])","Au%1")
+			line.text = line.text:gsub("[o]+[w]+([ .,?!])","au%1")
+			line.text = line.text:gsub("[W]+[Aa]+[Hh]+","Buá")
+			line.text = line.text:gsub("[w]+[a]+[h]+","buá")
 
 
 			--Colocar estilo musica em todas linhas com ♪ e caso exista \N alinha a 2º linha correctamente.

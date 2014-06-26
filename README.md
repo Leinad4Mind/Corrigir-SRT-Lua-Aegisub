@@ -14,8 +14,25 @@ Corrige imensos problemas existentes nas legendas SRT:
 - Corrige problema de linhas sobrepostas existentes nos SRTs.
 -	v5: Corrige espaço antes da "," ou ";".
 -	v5: Corrige problema de reticências. Caso haja 2 pontos ou mais que 3 pontos.
--	v5: Corrige problema de duplo espaço. Mais que 2 espaços ele ignora. (Visto poder ser typesetting)
+-	v5: Corrige problema de duplo espaço.
 -	v5: Corrige diversas onomatopeias, de inglês para português, caso o tradutor tenha deixado alguma em inglês.
+- v6: Espaços entre digitos foi resolvido.
+- v6: Colocação de pontos nos digitos para separa a casa dos mil.
+- v6: Correcção de diversos bugs, inclusive do hífen em diversas ocasiões.
+- v7: Corrige trás por traz e vice-versa. (atrás e detrás incluído) 
+- v7: Corrige policia para polícia e vice-versa. (quase todos os casos)
+- v7:Adiciona espaço após pontuação ( . ! ? ) 
+- v7: Depois de pontuação . ou ? ou ! coloca maiúscula caso não haja. 
+- v7: Corrige trás por traz e vice-versa. (atrás e detrás incluído) 
+- v7: Corrige policia para polícia e vice-versa. (quase todos os casos)
+- v7: Adiciona espaço após pontuação ( . ! ? ) 
+- v7: Depois de pontuação . ou ? ou ! coloca maiúscula caso não haja. 
+- v8: Corrige"o" por "0" e vicer-versa, problema de OCR 
+- v8: Correcção de erros comuns, com diversos casos adicionados
+- v8: Se frase termina com reticências e se a próxima se iniciar com minúscula, então adiciona reticências no início da próxima. 
+- v9: Correcção de erros comuns melhorado, com mais casos
+- v9: Correcção da mesóclise dos verbos dar e fazer.
+
 
 Por fazer
 -----------------

@@ -564,7 +564,7 @@ function corrigir(subs,i,config)
 				line.text = re.sub(line.text, "\\b([dD])[eé]f[ií]c[ií]te(s?)", "$1éfice$2") -- deficite -> défice
 				line.text = re.sub(line.text, "\\b([dD])escozid([oa])", "$1escosid$2") --ex: descozido -> descosido
 				line.text = re.sub(line.text, "\\b([dD])egost([aáeo])", "$1egust$2") --ex: degostáreis -> degustáreis
-				line.text = re.sub(line.text, "\\b([dD])isfrutar","$1esfrutar") -- disfrutar -> desfrutar
+				line.text = re.sub(line.text, "\\b([dD])isfrut\\B","$1esfrut") -- disfrutar -> desfrutar
 				line.text = re.sub(line.text, "\\b([dD])[eií]sp[êeé]nd[ieí]o(s?)", "$1ispêndio$2") -- dispêndeo / despêndio / dispendio -> dispêndio
 				line.text = re.sub(line.text, "\\b([dD])ia (\\w* ?)solarengo", "$1ia $2soalheiro") --ex: dia solarengo -> dia soalheiro
 				line.text = re.sub(line.text, "\\b([dD])issuad(\\S*) a", "$1issuad$2 de") --ex: dissuadir a viajar -> dissuadir de viajar

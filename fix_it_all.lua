@@ -11,7 +11,7 @@
 --]]
 
 script_name = "FixItAll"
-script_description = "FixItAll! FixItAll! I dont give a shit anymooooore! FixItAll! FixItAll... the errors never bother me anyway."
+script_description = "FixItAll! FixItAll! I dont give a shit anymooooore! FixItAll! FixItAll... the errors never bothered me anyway."
 script_author = "Leinad4Mind"
 script_version = "1.0"
 
@@ -24,7 +24,7 @@ function cleantags_subs(subtitles)
 	local linescleaned = 0
 	for i = 1, #subtitles do
 		aegisub.progress.set(i * 100 / #subtitles)
-		if subtitles[i].class == "dialogue" and not subtitles[i].comment and subtitles[i].text ~= "" then
+		if subtitles[i].class == "dialogue" and not subtitles[i].comment then
 			ntext = cleantags(subtitles[i].text)
 			local nline = subtitles[i]
 			nline.text = ntext
@@ -33,6 +33,7 @@ function cleantags_subs(subtitles)
 			aegisub.progress.task(linescleaned .. " linhas corrigidas")
 		end
 	end
+	aegisub.log("Se o ficheiro for grande terão de esperar, labregos! Quando o botão disser \"Fechar\" aí cliquem.")
 end
 
 --Recolhe nomes dos estilos
@@ -75,7 +76,7 @@ function create_confi(subs)
 		{
 			class = "dropdown", name = "chosen",
 			x = 2, y = 3, width = 5, height = 1,
-			items = {"Linhas Seleccionadas"}, value = "Linhas Seleccionadas", hint = "Linhas Seleccionadas ou Estilo Específico?"
+			items = {"Todas as Linhas", "Linhas Seleccionadas"}, value = "Todas as Linhas", hint = "Linhas Seleccionadas ou Estilo Específico?"
 		}
 	}
 	for i,w in pairs(styles) do
@@ -84,13 +85,11 @@ function create_confi(subs)
 	return conf
 end
 
-function corrigir(subs,index,config)
-	local line = subs[index]
+function corrigir(subs,i,config)
+	local line = subs[i]
 		if line.class == "dialogue" then
-
-			if not config.comment == "Legenda Portuguesa" then
+			if config.comment == "Legenda Brasileira" then
 				--corrigir brasileirismos
-				----[[  NOTA: Descomentar para as legendas brasileiras!
 				--A
 				line.text = re.sub(line.text, "\\b([Aa])ção\\b","$1cção")
 				line.text = re.sub(line.text, "\\b([Aa])cessar","$1aceder")
@@ -108,10 +107,10 @@ function corrigir(subs,index,config)
 				line.text = re.sub(line.text, "\\bcara(s?)\\b","gajo$1")
 				line.text = re.sub(line.text, "\\bCara(s?)\\b","Gajo$1")
 				line.text = re.sub(line.text, "\\b([cC])erimônia(s?)\\b","$1erimónia$2")
-				line.text = re.sub(line.text, "\\bcelular\\b","telemóvel\\b")
-				line.text = re.sub(line.text, "\\bCelular\\b","Telemóvel\\b")
-				line.text = re.sub(line.text, "([Cc])oletiv([aio])","$1olectiv$2")
-				line.text = re.sub(line.text, "\\bcontat\\B","contact")
+				line.text = re.sub(line.text, "\\bcelular\\b","telemóvel")
+				line.text = re.sub(line.text, "\\bCelular\\b","Telemóvel")
+				line.text = re.sub(line.text, "\\b([Cc])oletiv([aio])","$1olectiv$2")
+				line.text = re.sub(line.text, "\\b([Cc])ontat\\B","$1ontact")
 				line.text = re.sub(line.text, "\\b([Cc])âmera","$1âmara")
 				line.text = re.sub(line.text, "\\b([Cc])omitê","$1omité")
 				line.text = re.sub(line.text, "\\b([Cc])ontêiner","$1ontentor")
@@ -144,8 +143,8 @@ function corrigir(subs,index,config)
 				line.text = re.sub(line.text, "\\bgarot([oa])","miúd$1")
 				line.text = re.sub(line.text, "\\bGarot([oa])","Miúd$1")
 				line.text = re.sub(line.text, "\\b([gG])ênio","$1énio")
-				line.text = re.sub(line.text, "grana","dinheiro")
-				line.text = re.sub(line.text, "Grana","Dinheiro")
+				line.text = re.sub(line.text, "\\bgrana\\b","dinheiro")
+				line.text = re.sub(line.text, "\\bGrana\\b","Dinheiro")
 				--H
 				line.text = re.sub(line.text, "\\b(,?\\s?)(hein|hã)\\b","")
 				--I
@@ -183,8 +182,8 @@ function corrigir(subs,index,config)
 				line.text = re.sub(line.text, "\\b([Rr])eação","$1eacção")
 				line.text = re.sub(line.text, "\\b([Rr])egistro","$1egisto")
 				line.text = re.sub(line.text, "\\b([Rr])et\\B","$1ect")
-				line.text = re.sub(line.text, "\\bruim","mau")
-				line.text = re.sub(line.text, "\\bRuim","Mau")
+				line.text = re.sub(line.text, "\\bruim\\b","mau")
+				line.text = re.sub(line.text, "\\bRuim\\b","Mau")
 				--S
 				--line.text = re.sub(line.text, "\\bsua(s?)","a$1 tua$1")
 				--line.text = re.sub(line.text, "\\bSua(s?)","A$1 tua$1")
@@ -196,18 +195,18 @@ function corrigir(subs,index,config)
 				--V
 				line.text = re.sub(line.text, "\\bvan\\b","carrinha")
 				line.text = re.sub(line.text, "\\bVan\\b","Carrinha")
-				line.text = re.sub(line.text, "\\bvocê está","estás")
-				line.text = re.sub(line.text, "\\bVocê está","Estás")
-				line.text = re.sub(line.text, "\\bvocê é","és")
-				line.text = re.sub(line.text, "\\bVocê é","És")
-				line.text = re.sub(line.text, "\\bvocê foi","foste")
-				line.text = re.sub(line.text, "\\bVocê foi","Foste")
+				line.text = re.sub(line.text, "\\bvocê está\\b","estás")
+				line.text = re.sub(line.text, "\\bVocê está\\b","Estás")
+				line.text = re.sub(line.text, "\\bvocê é\\b","és")
+				line.text = re.sub(line.text, "\\bVocê é\\b","És")
+				line.text = re.sub(line.text, "\\bvocê foi\\b","foste")
+				line.text = re.sub(line.text, "\\bVocê foi\\b","Foste")
 				line.text = re.sub(line.text, "\\bvocê (\\w+ria)","$1s")
 				line.text = re.sub(line.text, "\\bVocê (\\w+ria)","\\u$1s")
 				line.text = re.sub(line.text, "\\bVocê (\\l)(\\w+)","\\u$1$2s")
 				--Y
-				line.text = re.sub(line.text, "\\b(yeah|ya)","sim")
-				line.text = re.sub(line.text, "\\b(Yeah|Ya)","Sim")
+				line.text = re.sub(line.text, "\\b(yeah|ya)\\b","sim")
+				line.text = re.sub(line.text, "\\b(Yeah|Ya)\\b","Sim")
 				-- Globais
 				line.text = re.sub(line.text, "([\\s,.?!])e([ao])([\\s,.?!])","$1e $2$3")
 				line.text = re.sub(line.text, "\\b([^-])(se|te|me|lhe)\\s(\\w\\w\\w+)\\b","$1$3-$2")
@@ -215,8 +214,7 @@ function corrigir(subs,index,config)
 				line.text = re.sub(line.text, "\\b(\\w\\w+)indo\\b","a $1ir")
 				line.text = re.sub(line.text, "\\b(\\w\\w\\w+)ando\\b","a $1ar")
 				line.text = re.sub(line.text, "\\b(\\w+)endo\\b","a $1er")
-				--]]
-			else
+			end
 
 				--remover >> do texto - FUNCIONA
 				line.text = line.text:gsub(">>","")
@@ -224,8 +222,8 @@ function corrigir(subs,index,config)
 				--corrigir itálico srt - FUNCIONA
 				line.text = line.text:gsub("%s?</? ?[iI]>","{\\i0}")
 				
-			-- corrigir se "frase] frase" -> "[frase] frase" - FUNCIONA
-				line.text = re.sub(line.text, "(.+)]","[$1]")
+				-- corrigir se "frase] frase" -> "[frase] frase" - FUNCIONA
+				line.text = re.sub(line.text, "([\\w ]+)]","[$1]")
 				line.text = re.sub(line.text, "\\[\\[","[")
 
 				-- '' por " - FUNCIONA
@@ -282,7 +280,7 @@ function corrigir(subs,index,config)
 				--se frase começa com hífen, meia-risca ou Travessão = - frase - frase
 				line.text = re.sub(line.text, "([[:punct:]])(\\s)([-–—].*)$","$1\\\\N$3")
 				--se frase começa com hífen, meia-risca ou Travessão = frase\N- frase
-				line.text = re.sub(line.text, "^([^-–—'\"]*N\\s?)([-–—]\\s?)(.*)$","$2$1$2$3")
+				line.text = re.sub(line.text, "^(\\{.*\\})([^-–—]*\\\\[Nn]\\s?)(-\\s?|–\\s?|—\\s?)(.*)$","$1$3$2$3$4")
 				--se frase começa com hífen, meia-risca ou Travessão = - frase
 				if not line.text:match("\\[Nn]") then
 					line.text = re.sub(line.text, "^[-–—]\\s?([^-–—]*)$","$1")
@@ -294,25 +292,23 @@ function corrigir(subs,index,config)
 					line.text = line.text:gsub("^(—%s?)(.*\\[Nn])([^-–—])(.*)","%1%2%1%3%4")
 				end
 
+				--corrigir "--" ou "—" depois de uma palavra para "..." - FUNCIONA
+				line.text = re.sub(line.text, "([^\\}\\\\N]|[\\s\\d])(—|--)","$1...")
+
 				-- Hífens para meia-risca removendo espaços - FUNCIONA
-				line.text = line.text:gsub("^- ([^ ])","– %1")
-				line.text = line.text:gsub("^-([^ ])","– %1")
+				line.text = line.text:gsub("^({.-}*)- ([^ ])","%1– %2")
+				line.text = line.text:gsub("^({.-}*)-([^ ])","%1– %2")
 				line.text = line.text:gsub("(\\[Nn])-[ ]?([^ ])","%1– %2")
-				line.text = line.text:gsub("^({.-}+)-([^ ])","%1– %2")
 				-- manter meia-risca removendo espaços - FUNCIONA
-				line.text = line.text:gsub("^–([^ ])","– %1")
+				line.text = line.text:gsub("^({.-}*)–([^ ])","%1– %2")
 				line.text = line.text:gsub("(\\[Nn])–([^ ])","%1– %2")
-				line.text = line.text:gsub("^({.-}+)–([^ ])","%1– %2")
+				--line.text = line.text:gsub("^({.-}+)–([^ ])","%1– %2")
 				-- manter travessão removendo espaços - FUNCIONA
-				line.text = line.text:gsub("^—([^ ])","— %1")
+				line.text = line.text:gsub("^({.-}*)—([^ ])","%1— %2")
 				line.text = line.text:gsub("(\\[Nn])—([^ ])","%1— %2")
-				line.text = line.text:gsub("^({.-}+)—([^ ])","%1— %2")
+				--line.text = line.text:gsub("^({.-}+)—([^ ])","%1— %2")
 				--uniformizar hífen, meia-risca e travessão
 				line.text = re.sub(line.text, "([-–—]\\s)(.*N)([-–—]\\s)","$1$2$1")
-
-				--corrigir "--" ou "—" depois de uma palavra para "..." - FUNCIONA
-				line.text = re.sub(line.text, "([^N]|\\s|\\d)--","$1...")
-				line.text = re.sub(line.text, "([^N]|\\s|\\d)—","$1...")
 
 				--corrigir "Última", ou seja, passar o I maiusculo no meio de palavras a minúsculas - FUNCIONA
 				--Protecção das palavras começadas por L
@@ -330,10 +326,10 @@ function corrigir(subs,index,config)
 				line.text = line.text:gsub("([^%.?!])(\\N)% ?(—) ","%1.%2%3 ")
 
 				--Adicionar aspa em falta, caso comece e não termine - FUNCIONA
-				--if i<#subs then
-					local segunda = subs[index+1]
-					local terceira = subs[index+2]
-					local quarta = subs[index+3]
+				if i < (#subs-4) then -- se não a última linha -3 então
+					local segunda = subs[i+1]
+					local terceira = subs[i+2]
+					local quarta = subs[i+3]
 					--se primeiro começa com aspas e não termina com aspas então
 					if line.text:match("^\"") and not line.text:match("\"$") then
 						--se quarto termina com aspas e não começa com aspas e se 2º e 3º não terminam com aspas então
@@ -342,13 +338,13 @@ function corrigir(subs,index,config)
 							if not terceira.text:match("^\"") then
 								--colocar aspas no inicio da 3º
 								terceira.text = re.sub(terceira.text, "^(.*)$", "\"$1")
-								subs[index+2] = terceira
+								subs[i+2] = terceira
 							end
 							--se segunda não começa com aspas então add aspas
 							if not segunda.text:match("^\"") then
 								--colocar aspas no inicio da 2º
 								segunda.text = re.sub(segunda.text, "^(.*)$", "\"$1")
-								subs[index+1] = segunda
+								subs[i+1] = segunda
 							end
 						end
 						--Se quarta não tem aspas no fim nem inicio mas a 2 e 3º começam com aspas e não terminam, então add fim de aspas na quarta
@@ -356,7 +352,7 @@ function corrigir(subs,index,config)
 							if terceira.text:match("^\"") and segunda.text:match("^\"") then
 								--colocar aspas no fim da 4º!
 								quarta.text = re.sub(quarta.text, "^(.*)$", "$1\"")
-								subs[index+3] = quarta
+								subs[i+3] = quarta
 							end
 						end
 						--se terceira termina com aspas e não começa com aspas e se 2º não termina com aspas então
@@ -365,7 +361,7 @@ function corrigir(subs,index,config)
 							if not segunda.text:match("^\"") then
 								--colocar aspas no inicio da 2º
 								segunda.text = re.sub(segunda.text, "^(.*)$", "\"$1")
-								subs[index+1] = segunda
+								subs[i+1] = segunda
 							end
 						end
 						--se terceira não tem aspas no fim nem inicio mas a 2º começa com aspas e não termina, então add fim de aspas na terceira
@@ -373,7 +369,7 @@ function corrigir(subs,index,config)
 							if segunda.text:match("^\"") then
 								--colocar aspas no fim da 3º!
 								terceira.text = re.sub(terceira.text, "^(.*)$", "$1\"")
-								subs[index+2] = terceira
+								subs[i+2] = terceira
 							end
 						end
 						--se segunda não termina com aspas nem começa com, verifica se primeira termina com , ; : ou ... e se sim add aspas ao fim da segunda
@@ -381,16 +377,16 @@ function corrigir(subs,index,config)
 							if not line.text:match("[^.][.|!|?]$") then
 								--colocar aspas no fim da 2º linha
 								segunda.text = re.sub(segunda.text, "^(.*)$", "$1\"")
-								subs[index+1] = segunda
+								subs[i+1] = segunda
 							--add aspas ao fim da 1º escusado fazer o match de . ! ? ?!
 							else
 								--colocar aspas no fim da 1º linha
 								line.text = re.sub(line.text, "^(.*)$", "$1\"")
-								subs[index] = line
+								subs[i] = line
 							end
 						end
 					end			
-				--end
+				end
 
 				--Criar um vector com nomes e depois usar um if e um for que procure para cada palavra da legenda se é igual a cada nome deste vector em mínuscula,
 				--	e se for igual é colocar a 1º letra a maiuscula ou usar a posição do vector pela palavra da legenda.
@@ -429,14 +425,14 @@ function corrigir(subs,index,config)
 
 
 				--Reticências no início da frase - FUNCIONA
-				--if i<#subs then
-					local nextln = subs[index+1]
+				if i < (#subs-1) then -- se não a última linha -3 então
+					local nextln = subs[i+1]
 					if line.text:sub(-3, -1) == "..." then --e se próxima começa com mínuscula então
 							nextln.text = re.sub(nextln.text, "^(\\l)","... $1")
 							nextln.text = re.sub(nextln.text, "^([-–—] )([\\l\\d])","$1... $2")
-							subs[index+1] = nextln
+							subs[i+1] = nextln
 					end
-				--end
+				end
 
 				-- á por à e - FUNCIONA
 				line.text = line.text:gsub("([ \"])á ([^ ])","%1à %2")
@@ -454,7 +450,7 @@ function corrigir(subs,index,config)
 				line.text = re.sub(line.text, "Lhe far(\\w+)", "Far-lhe-$1") -- Lhe farei -> Far-lhe-ei
 
 				--Problema de hífens em palavras ("fizes-te", "lês-te", "pensas-te") - FUNCIONA
-				line.text = re.sub(line.text, "\\b([a-zA-Z][a-zA-Z]+)arei-te","$1ar-te-ei") --ex: amarei-te -> amar-te-ei | ajudarei-te -> ajudar-te-ei 
+				line.text = re.sub(line.text, "\\b(\\p{L*}\\p{L*}+)arei-te","$1ar-te-ei") --ex: amarei-te -> amar-te-ei | ajudarei-te -> ajudar-te-ei 
 				line.text = re.sub(line.text, "\\b([fF])izes%-te(s?)\\b","%1izeste%2")
 				line.text = re.sub(line.text, "\\b([fF])os-te([s\\s])","$1oste$2")
 				line.text = re.sub(line.text, "\\b([eE])ngolis-te([s\\s])","$1ngoliste$2")
@@ -670,9 +666,9 @@ function corrigir(subs,index,config)
 				line.text = re.sub(line.text, "\\b([tT])abeli[õã][oe]s", "$1abeliães") -- tabeliões / tabeliãos -> tabeliães
 				line.text = re.sub(line.text, "\\b([tT])[ãáâa][nm][vb][eé][nm]\\b", "$1ambém$2") -- tambem / também / tanbem / também / tanbém -> também
 				line.text = re.sub(line.text, "\\b([tT])ransmitido em ind[ei]f[ei]r[ei]do", "$1ransmitido em diferido") --ex: em indeferido -> em diferido
-				line.text = re.sub(line.text, "\\b([tT])u ([a-zA-Z]*)stes","$1u $2ste") --ex: tu cantastes -> tu cantaste
+				line.text = re.sub(line.text, "\\b([tT])u (\\p{L*}*)stes","$1u $2ste") --ex: tu cantastes -> tu cantaste
 				--V
-				line.text = re.sub(line.text, "\\b([vV])ós ([a-zA-Z]*)ste\\b","$1ós $2stes") --ex: vós cantaste -> vós cantastes
+				line.text = re.sub(line.text, "\\b([vV])ós (\\p{L*}*)ste\\b","$1ós $2stes") --ex: vós cantaste -> vós cantastes
 				line.text = re.sub(line.text, "\\b([vV])uner[aá]ve(l?)","$1ulneráve$2") --vulnerável e vulneráveis
 				--X
 				line.text = re.sub(line.text, "\\b([xX])adrês", "$1adrez") -- xadrês -> xadrez
@@ -765,9 +761,8 @@ function corrigir(subs,index,config)
 				end
 				-- * por ♪ - FUNCIONA
 				line.text = line.text:gsub("([^*]?)*([^*]?)","%1♪%2")
-			end
-			subs[index] = line
-		end
+				subs[i] = line
+		end --fim do 1º if
 
 --[[
 	--Corrigir timing pro roca que ele é chato...
@@ -816,9 +811,13 @@ function add_tags(subs,sel,config)
 		for x, i in ipairs(sel) do
 			corrigir(subs,i,config)
 		end
+	elseif config.chosen == "Todas as Linhas" then
+		for i=1, #subs do
+				corrigir(subs,i,config)
+		end
 	else
-		for i=1, #subs+3 do
-			if subs[i].style == config.chosen:sub(10) then
+		for i=1, #subs do
+			if subs[i].style == config.chosen:sub(9) then
 				corrigir(subs,i,config)
 			end
 		end

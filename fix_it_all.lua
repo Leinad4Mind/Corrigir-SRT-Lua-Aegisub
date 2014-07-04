@@ -56,17 +56,17 @@ function create_confi(subs)
 		{
 			class = "label",
 			x = 1, y = 0, width = 5, height = 1,
-			label = "\n...| Desenvolvido por Leinad4Mind |...",
+			label = "\n...| Desenvolvido por Leinad4Mind |...\n\nNota: \nNão aplicar em legendas com Karaoke!\nCuidado ao aplicar em legendas com bastante typesetting!",
 		},
 		{
 			class = "label",
 			x = 1, y = 2, width = 1, height = 1,
-			label = "Seleccione:"
+			label = "Legenda Base:"
 		},
 		{
 			class = "dropdown", name = "comment",
 			x = 2, y = 2, width = 5, height = 1,
-			items = {"Legenda Portuguesa", "Legenda Brasileira"}, value = "Legenda Portuguesa", hint = "Deseja corrigir legendas?"
+			items = {"Portuguesa", "Brasileira"}, value = "Portuguesa", hint = "Deseja corrigir legendas?"
 		},
 		{
 			class = "label",
@@ -88,7 +88,7 @@ end
 function corrigir(subs,i,config)
 	local line = subs[i]
 		if line.class == "dialogue" then
-			if config.comment == "Legenda Brasileira" then
+			if config.comment == "Brasileira" then
 				--corrigir brasileirismos
 				--A
 				line.text = re.sub(line.text, "\\b([Aa])ção\\b","$1cção")

@@ -229,23 +229,30 @@ function corrigir(subs,i,config)
 				-- '' por " - FUNCIONA
 				line.text = line.text:gsub("''","\"")
 
+				-- Reticências com .. ficar ... - FUNCIONA
+				line.text = line.text:gsub("(%.%.)([^ .\\]?)","%1.%2")
+				line.text = line.text:gsub("(%.%.)([%.]+)","%1.")
+
 				-- Espaços após pontuação . ! ? - FUNCIONA
 				line.text = line.text:gsub("([%.%!%?,:;])([^%s^%d^\\^\"^\\{])","%1 %2")
+				line.text = line.text:gsub("(%.)%s(%.)","%1%2") --corrigir . . .
+				-- Espaços após reticências - FUNCIONA
+				line.text = line.text:gsub("(%.%.%.)([^%s^\\{^\\^\"])","%1 %2")
 
 				-- Apaga Duplo Espaço! - FUNCIONA
-				line.text = line.text:gsub("([^ ])([% ])([% ]+)([^ ])","%1%2%4")
+				line.text = line.text:gsub("([^%s])([%s])([%s]+)([^%s])","%1%2%4")
 
 				-- Espaço antes da , e ; e {} - FUNCIONA
-				line.text = line.text:gsub("([% ]+)(%,)","%2")
-				line.text = line.text:gsub("([% ]+)(%;)","%2")
-				line.text = line.text:gsub("([% ]+)(%{)","%2")
-				line.text = line.text:gsub("(%})([% ]+)","%1")
+				line.text = line.text:gsub("([%s]+)(%,)","%2")
+				line.text = line.text:gsub("([%s]+)(%;)","%2")
+				line.text = line.text:gsub("([%s]+)(%{)","%2")
+				line.text = line.text:gsub("(%})([%s]+)","%1")
 
-				-- Espaço antes da ! e ? e . - FUNCIONA
+				-- Espaço antes da ! e ? e - FUNCIONA
 				line.text = line.text:gsub("(%s+)(%?)","%2")
 				line.text = line.text:gsub("(%s+)(%!)","%2")
-				line.text = line.text:gsub("([^%-%–%—]%s+)(%.)","%2")
-				line.text = line.text:gsub("(%w%.)%s(%w%.)","%1%2")
+				line.text = line.text:gsub("([^%-%–%—%w]%s+)(%.)","%2")
+				line.text = line.text:gsub("(%s+)(%.)","%2")
 				line.text = line.text:gsub("^(%s+)([%-%–%—])","%2")
 				line.text = line.text:gsub("(\\N[%s]+)([%-%–%—])","\\N%2")
 				line.text = line.text:gsub("(%s+\\N)([%-%–%—])","\\N%2")
@@ -254,13 +261,6 @@ function corrigir(subs,i,config)
 				line.text = re.sub(line.text, "(\\d+) +(\\d+)( +(\\d+))*","$1$2$4")
 				line.text = re.sub(line.text, "(\\d+)(\\d{3})+","$1.$2")
 				line.text = re.sub(line.text, "(\\d+)(\\d{3}.\\d{3})+","$1.$2")
-
-				-- Reticências com .. ficar ... - FUNCIONA
-				line.text = line.text:gsub("(%.%.)([^ .\\]?)","%1.%2")
-				line.text = line.text:gsub("(%.%.)([%.]+)","%1.")
-
-				-- Espaços após reticências - FUNCIONA
-				line.text = line.text:gsub("(%.%.%.)([^% ^\\{^\\^\"])","%1 %2")
 
 				--corrigir "C0itada", ou seja, passar o número 0 no meio de palavras a o - FUNCIONA
 				line.text = re.sub(line.text, "(\\l+)0([^\\}^\\d])","$1o$2")
@@ -280,7 +280,7 @@ function corrigir(subs,i,config)
 				--se frase começa com hífen, meia-risca ou Travessão = - frase - frase
 				line.text = re.sub(line.text, "([-–—]\\s.*)(\\s)([-–—]\\s.*)$","$1\\\\N$3")
 				--se frase começa com hífen, meia-risca ou Travessão = frase\N- frase
-				line.text = re.sub(line.text, "^([^-–—]*\\\\[Nn]\\s?)(-\\s?|–\\s?|—\\s?)(.*)$","$2$1$2$3")
+				line.text = re.sub(line.text, "^(\\{.-\\}*)([^-–—]*\\\\[Nn]\\s?)(-\\s?|–\\s?|—\\s?)(.*)$","$1$3$2$3$4")
 				--se frase começa com hífen, meia-risca ou Travessão = - frase
 				if not line.text:match("\\[Nn]") then
 					line.text = re.sub(line.text, "^[-–—]\\s?([^-–—]*)$","$1")

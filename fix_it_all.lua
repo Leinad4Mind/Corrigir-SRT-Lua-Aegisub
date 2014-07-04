@@ -236,21 +236,21 @@ function corrigir(subs,i,config)
 				-- Espaços após pontuação . ! ? e {} - FUNCIONA
 				line.text = line.text:gsub("([%.%?!,:;])([^ ^%d^\\^{])","%1 %2")
 				line.text = line.text:gsub("(%.)%s(%.)","%1%2") --corrigir . . .
-				line.text = line.text:gsub("(%.)%s(\")","%1%2") --corrigir ."$
-				-- Espaços após reticências - FUNCIONA
-				line.text = line.text:gsub("(%.%.%.)([^%s^\\{^\\^\"])","%1 %2")
-				line.text = line.text:gsub("^({\\%w+}) +(.*) +({\\%w+})$","%1%2%3")
-				line.text = re.sub(line.text, "(-|–|—)([^\\s–—-]\\L)","$1 $2")
-				line.text = re.sub(line.text, "^(\\s+)(-|–|—)","$2")
+				line.text = line.text:gsub("(%.)%s(\")","%1%2") --corrigir ."
 
 				-- Apaga Duplo Espaço! - FUNCIONA
 				line.text = line.text:gsub("([%s])([%s]+)","%1")
 
-				-- Espaço antes da , e ; e {} - FUNCIONA
-				line.text = line.text:gsub("( +)(,)","%2")
-				line.text = line.text:gsub("( +)(;)","%2")
+				-- Espaço antes da , e ; e ! e ? e {} - FUNCIONA
+				line.text = line.text:gsub("([% ]+)([%.%?,;:!])","%2")
 				line.text = line.text:gsub("( +)({)"," %2")
 				line.text = line.text:gsub("(})( +)","%1 ")
+
+				-- Espaços após reticências - FUNCIONA
+				line.text = line.text:gsub("(%.%.%.)([^ ^\\{^])","%1 %2")
+				line.text = line.text:gsub("^({\\%w+}) +(.*) +({\\%w+})$","%1%2%3")
+				line.text = re.sub(line.text, "(-|–|—)([^\\s–—-][\\L])","$1 $2")
+				line.text = re.sub(line.text, "^(\\s+)(-|–|—)([^\\s])","$2 $3")
 
 				--Tratar de letras juntas as tags frase{\tag}frase{\tag}frase -> frase {\tag}frase{\tag} frase
 				line.text = line.text:gsub("}(%l)","} %1") -- aplica espaço após todos }
@@ -258,9 +258,7 @@ function corrigir(subs,i,config)
 				line.text = re.sub(line.text, "(\\l)\\s(\\{\\\\\\w+\\})([\\l\\?!.,:;]+)$","$1$2 $3") --correcção de {\tag}f -> {\tag} f fim da frase
 				line.text = re.sub(line.text, "^(\\{\\\\\\w+\\})\\s(\\l)","$1$2") --correcção de {\tag} f -> {\tag}f inicio de frase
 
-				-- Espaço antes da ! e ? - FUNCIONA
-				line.text = line.text:gsub("( +)(%?)","%2")
-				line.text = line.text:gsub("( +)(%!)","%2")
+				-- Espaço antes do . - FUNCIONA
 				line.text = line.text:gsub("([^%-%–%—%w]%s+)(%.)","%2")
 				line.text = line.text:gsub("([^%-%–%—]: )( +)(%.)","$1%3")
 				--Espaço antes de hifen etc - FUNCIONA
@@ -279,7 +277,7 @@ function corrigir(subs,i,config)
 				line.text = re.sub(line.text, "(\\u*)0(\\u+)","$1O$2")
 
 				--remover ponto final dps de ? ou ! ou , - FUNCIONA
-				line.text = re.sub(line.text, "([?!,])[,\\.]","$1")
+				line.text = re.sub(line.text, "([\\?!,;:])[,\\.]","$1")
 
 				--Corrigir múltiplus ??->? e !!->! e ?????->? e !!!!!!->!!!
 				line.text = re.sub(line.text, "(!{3}!+)","!!!")
@@ -348,7 +346,7 @@ function corrigir(subs,i,config)
 				--espaços antes e depois do \N
 				line.text = re.sub(line.text, "(\\s?)(\\\\[Nn])(\\s?)","$2") --já se garante espaços dps do hífen
 
-				--Adicionar aspa em falta, caso comece e não termine - FUNCIONA
+				--Adicionar aspa em falta, caso comece e não termine - FUNCIONA - Falta FAZER caso comece com {tags} :/ meh
 				if i < (#subs-4) then -- se não a última linha -3 então
 					local segunda = subs[i+1]
 					local terceira = subs[i+2]

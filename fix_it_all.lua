@@ -233,14 +233,18 @@ function corrigir(subs,i,config)
 				line.text = line.text:gsub("(%.%.)([^ .\\]?)","%1.%2")
 				line.text = line.text:gsub("(%.%.)([%.]+)","%1.")
 
-				-- Espaços após pontuação . ! ? - FUNCIONA
+				-- Espaços após pontuação . ! ? e {} - FUNCIONA
 				line.text = line.text:gsub("([%.%?!,:;])([^ ^%d^\\^{])","%1 %2")
 				line.text = line.text:gsub("(%.)%s(%.)","%1%2") --corrigir . . .
+				line.text = line.text:gsub("(%.)%s(\")","%1%2") --corrigir ."$
 				-- Espaços após reticências - FUNCIONA
 				line.text = line.text:gsub("(%.%.%.)([^%s^\\{^\\^\"])","%1 %2")
+				line.text = line.text:gsub("^({\\%w+}) +(.*) +({\\%w+})$","%1%2%3")
+				line.text = re.sub(line.text, "(-|–|—)([^\\s–—-]\\L)","$1 $2")
+				line.text = re.sub(line.text, "^(\\s+)(-|–|—)","$2")
 
 				-- Apaga Duplo Espaço! - FUNCIONA
-				line.text = line.text:gsub("([%s])([%s]+)","%1%2")
+				line.text = line.text:gsub("([%s])([%s]+)","%1")
 
 				-- Espaço antes da , e ; e {} - FUNCIONA
 				line.text = line.text:gsub("( +)(,)","%2")
@@ -254,14 +258,14 @@ function corrigir(subs,i,config)
 				line.text = re.sub(line.text, "(\\l)\\s(\\{\\\\\\w+\\})([\\l\\?!.,:;]+)$","$1$2 $3") --correcção de {\tag}f -> {\tag} f fim da frase
 				line.text = re.sub(line.text, "^(\\{\\\\\\w+\\})\\s(\\l)","$1$2") --correcção de {\tag} f -> {\tag}f inicio de frase
 
-				-- Espaço antes da ! e ? e - FUNCIONA
-				line.text = line.text:gsub("(%s+)(%?)","%2")
-				line.text = line.text:gsub("(%s+)(%!)","%2")
+				-- Espaço antes da ! e ? - FUNCIONA
+				line.text = line.text:gsub("( +)(%?)","%2")
+				line.text = line.text:gsub("( +)(%!)","%2")
 				line.text = line.text:gsub("([^%-%–%—%w]%s+)(%.)","%2")
-				line.text = line.text:gsub("(%s+)(%.)","%2")
-				line.text = line.text:gsub("^(%s+)([%-%–%—])","%2")
-				line.text = line.text:gsub("(\\N[%s]+)([%-%–%—])","\\N%2")
-				line.text = line.text:gsub("(%s+\\N)([%-%–%—])","\\N%2")
+				line.text = line.text:gsub("([^%-%–%—]: )( +)(%.)","$1%3")
+				--Espaço antes de hifen etc - FUNCIONA
+				line.text = line.text:gsub("(\\N +)([%-%–%—])","\\N%2")
+				line.text = line.text:gsub("( +\\N)([%-%–%—])","\\N%2")
 
 				-- Espaço no meio de digitos passa a . - FUNCIONA
 				line.text = re.sub(line.text, "(\\d+) +(\\d+)( +(\\d+))*","$1$2$4")
@@ -282,34 +286,12 @@ function corrigir(subs,i,config)
 				line.text = re.sub(line.text, "([^!])(!!)$","$1!")
 				line.text = re.sub(line.text, "(([?,:;]){2,})","$2")
 
-				--corrigir diálogos: "Olá João! - Olá Maria" -> "- Olá João!\N- Olá Maria" - FUNCIONA
-				--se frase começa com hífen, meia-risca ou Travessão = - frase - frase -> - frase\N- frase
-				line.text = re.sub(line.text, "([-–—]\\s.*)(\\s)([-–—]\\s.*)$","$1\\\\N$3")
-				--se frase começa com hífen, meia-risca ou Travessão = frase\N- frase -> - frase\N- frase
-				line.text = re.sub(line.text, "^(\\{\\\\\\w+\\}?)?([^-–—'\"]*N)(\\s?)([-–—]\\s?)(.*)$","$1$4$2$3$4$5")
-				--line.text = line.text:gsub("^({.-})([^-–—]\\[Nn])( ?)(- ?)(.*)$","$1$3$2$3$4")
-				--line.text = line.text:gsub("^({.-})([^-–—]\\[Nn])( ?)(– ?)(.*)$","$1$3$2$3$4")
-				--line.text = line.text:gsub("^({.-})([^-–—]\\[Nn])( ?)(— ?)(.*)$","$1$3$2$3$4")
-				--se frase começa com hífen, meia-risca ou Travessão = - frase -> frase -> - frase\N- frase
-				if not line.text:match("\\[Nn]") then
-					line.text = re.sub(line.text, "^[-–—]\\s?([^-–—]*)$","$1")
-					line.text = line.text:gsub("^({.-})%-%s?([^%-]*)$","%1%2")
-					line.text = line.text:gsub("^({.-})%–%s?([^%–]*)$","%1%2")
-					line.text = line.text:gsub("^({.-})%—%s?([^%—]*)$","%1%2")
-				else
-				--se frase começa com hífen, meia-risca ou Travessão = - frase\N frase -> - frase\N- frase
-					line.text = line.text:gsub("^(-%s?)(.*\\[Nn])([^-–—])(.*)","%1%2%1%3%4")
-					line.text = line.text:gsub("^(–%s?)(.*\\[Nn])([^-–—])(.*)","%1%2%1%3%4")
-					line.text = line.text:gsub("^(—%s?)(.*\\[Nn])([^-–—])(.*)","%1%2%1%3%4")
-					line.text = line.text:gsub("^({.-})(%- ?)(.*\\[Nn])([^-])","%1%2%3%2%4")
-					line.text = line.text:gsub("^({.-})(–%s?)(.*\\[Nn])([^–])","%1%2%3%2%4")
-					line.text = line.text:gsub("^({.-})(—%s?)(.*\\[Nn])([^—])","%1%2%3%2%4")
-					
-				end
 
 				-- Hífens para meia-risca removendo espaços - FUNCIONA
-				line.text = line.text:gsub("^({.-})(-)(%s?)([^%s])","%1–%3%4")
-				line.text = line.text:gsub("(\\[Nn])(-)(%s?)([^%s])","%1–%3%4")
+				line.text = line.text:gsub("^- ([^ ])","– %1")
+				line.text = line.text:gsub("^-([^ ])","– %1")
+				line.text = line.text:gsub("(\\[Nn])- ?([^ ])","%1– %2")
+				line.text = line.text:gsub("^({.-}+)-([^ ])","%1– %2")
 				-- manter meia-risca removendo espaços - FUNCIONA
 				line.text = line.text:gsub("^({.-}*)–([^ ])","%1– %2")
 				line.text = line.text:gsub("(\\[Nn])–([^ ])","%1– %2")
@@ -319,10 +301,34 @@ function corrigir(subs,i,config)
 				line.text = line.text:gsub("(\\[Nn])—([^ ])","%1— %2")
 				--line.text = line.text:gsub("^({.-}+)—([^ ])","%1— %2")
 				--uniformizar hífen, meia-risca e travessão
-				line.text = re.sub(line.text, "([-–—]\\s)(.*N)([-–—]\\s)","$1$2$1")
+				line.text = re.sub(line.text, "([-–—]\\s)(.*\\\\N)([-–—]\\s)","$1$2$1")
 
+				--corrigir diálogos: "Olá João! - Olá Maria" -> "- Olá João!\N- Olá Maria" - FUNCIONA
+				--se frase começa com hífen, meia-risca ou Travessão = - frase - frase -> - frase\N- frase
+				line.text = re.sub(line.text, "([-–—]\\s)(.*)(\\s)([-–—]\\s)(.*)$","$1$2\\\\N$1$5")
+				--se frase começa com hífen, meia-risca ou Travessão = frase\N- frase -> - frase\N- frase
+				line.text = re.sub(line.text, "^(\\{\\\\\\w+\\})([^–—'\"]*\\\\N\\s?)([–—]\\s?)(.*)$","$1$3$2$3$4")
+				line.text = re.sub(line.text, "^([^–—'\"]*\\\\N\\s?)([–—]\\s?)(.*)$","$2$1$2$3")
+				--se frase começa com hífen, meia-risca ou Travessão = - frase -> frase
+				if not line.text:match("\\[Nn]") then
+					line.text = re.sub(line.text, "^[-–—]\\s?([^-–—]*)$","$1")
+					line.text = line.text:gsub("^({.-})%-%s?([^%-]*)$","%1%2")
+					line.text = line.text:gsub("^({.-})%–%s?([^%–]*)$","%1%2")
+					line.text = line.text:gsub("^({.-})%—%s?([^%—]*)$","%1%2")
+				else
+				--se frase começa com hífen, meia-risca ou Travessão = - frase\N frase -> - frase\N- frase
+					line.text = line.text:gsub("^(–%s?)(.*\\[Nn])([^–])(.*)","%1%2%1%3%4")
+					line.text = line.text:gsub("^(—%s?)(.*\\[Nn])([^—])(.*)","%1%2%1%3%4")
+					line.text = line.text:gsub("^({.-})(– ?)(.*\\[Nn])([^–])","%1%2%3%2%4")
+					line.text = line.text:gsub("^({.-})(— ?)(.*\\[Nn])([^—])","%1%2%3%2%4")
+					-- Apaga Duplo Espaço! - FUNCIONA
+					line.text = line.text:gsub("([%s])([%s]+)","%1")
+				end
+
+				--FAZER passar \Nn- %l para maiuscula  e 
+				
 				--corrigir "--" ou "—" depois de uma palavra para "..." - FUNCIONA
-				line.text = re.sub(line.text, "([^\\}\\\\N]|[\\s\\d])(—|--)","$1...")
+				line.text = re.sub(line.text, "(\\w:)(—|--)","$1...")
 
 				--corrigir "Última", ou seja, passar o I maiusculo no meio de palavras a minúsculas - FUNCIONA
 				--Protecção das palavras começadas por L
@@ -472,7 +478,7 @@ function corrigir(subs,i,config)
 
 				--Problema de hífens em palavras ("fizes-te", "lês-te", "pensas-te") - FUNCIONA
 				line.text = re.sub(line.text, "\\b(\\p{L*}\\p{L*}+)arei-te","$1ar-te-ei") --ex: amarei-te -> amar-te-ei | ajudarei-te -> ajudar-te-ei 
-				line.text = re.sub(line.text, "\\b([fF])izes%-te(s?)\\b","%1izeste%2")
+				line.text = re.sub(line.text, "\\b([fF])izes-te(s?)\\b","$1izeste$2")
 				line.text = re.sub(line.text, "\\b([fF])os-te([s\\s])","$1oste$2")
 				line.text = re.sub(line.text, "\\b([eE])ngolis-te([s\\s])","$1ngoliste$2")
 				line.text = re.sub(line.text, "\\b([hH])[aá]( de|-de|s de)(s?)\\b","$1ás-de") --Hás de ou há des -> hás-de
@@ -559,7 +565,7 @@ function corrigir(subs,i,config)
 				line.text = re.sub(line.text, "\\b([bB])e[mn]vind([ao])(s?)", "$1em-vind$2$3") --ex: benvindo -> bem-vindo
 				line.text = re.sub(line.text, "\\b([bB])iquini", "$1iquíni") --ex: biquini -> biquíni
 				line.text = re.sub(line.text, "\\b([bB])oasvindas\\b", "$1oas-vindas") --ex: boasvindas -> boas-vindas
-				line.text = re.sub(line.text, "\\b([bB])olos-rei\\b", "%1olos-reis%2") --ex: bolos-rei -> bolos-reis
+				line.text = re.sub(line.text, "\\b([bB])olos-rei\\b", "$1olos-reis$2") --ex: bolos-rei -> bolos-reis
 				line.text = re.sub(line.text, "\\b([bB])uss?ula\\b", "$1ússola") --ex: bussula -> bússula
 				line.text = re.sub(line.text, "\\b([bB])[uúo]ss?[uú]lar\\b", "$1ussolar") --ex: busular -> busolar
 				--C
@@ -681,6 +687,7 @@ function corrigir(subs,i,config)
 				line.text = re.sub(line.text, "\\b([sS])émea(s?)\\b","$1êmea$2$3") -- sémea -> sêmea
 				line.text = re.sub(line.text, "\\b([sS])em exitar","$1em hesitar") -- sem exitar -> sem hesitar
 				line.text = re.sub(line.text, "\\b([sS])[oó]cio-([a-gA-Gi-nI-Np-zP-Z])", "$1ocio$2") --ex: socio-biológico -> sociobiológico
+				line.text = re.sub(line.text, "\\b([sS])[oó]cio([hoHO])", "$1ocio-$2") --ex: sociohistórico -> socio-histórico
 				line.text = re.sub(line.text, "\\b([sS])ugidade", "$1ujidade") --ex: sugidade -> sujidade
 				line.text = re.sub(line.text, "([sS])u[ií]s?[sç]([ao])(s?)", "$1uíç$2$3") -- suiças, suiço, suiços, suissas, suíssas, suisso, suísso, suíssos, Suíssa...etc -> Suíça
 				--T

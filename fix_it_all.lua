@@ -326,7 +326,7 @@ function corrigir(subs,i,config)
 				--FAZER passar \Nn- %l para maiuscula  e 
 				
 				--corrigir "--" ou "—" depois de uma palavra para "..." - FUNCIONA
-				line.text = re.sub(line.text, "(\\w:)(—|--)","$1...")
+				line.text = re.sub(line.text, "([^\\\\][^Nn])(—|--)","$1...")
 
 				--corrigir "Última", ou seja, passar o I maiusculo no meio de palavras a minúsculas - FUNCIONA
 				--Protecção das palavras começadas por L

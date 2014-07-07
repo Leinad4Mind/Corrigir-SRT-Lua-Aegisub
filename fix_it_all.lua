@@ -268,8 +268,8 @@ function corrigir(subs,i,config)
 
 				-- Espaço no meio de digitos passa a . - FUNCIONA
 				line.text = re.sub(line.text, "(\\d+) +(\\d+)( +(\\d+))*","$1$2$4") --Remove espaços entre dígitos
-				line.text = re.sub(line.text, "(\\d+)(\\d{3})+","$1.$2")
-				line.text = re.sub(line.text, "(\\d+)(\\d{3}.\\d{3})+","$1.$2")
+				line.text = re.sub(line.text, "([^,])(\\d+)(\\d{3})+([^,])","$1$2.$3$4")
+				line.text = re.sub(line.text, "(\\d+)(\\d{3}\\.\\d{3})+","$1.$2")
 				line.text = re.sub(line.text, "&H(\\d+).(\\d+)&","&H$1$2&") -- Correcção de &H000000&
 
 				--corrigir "C0itada", ou seja, passar o número 0 no meio de palavras a o - FUNCIONA

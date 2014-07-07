@@ -89,7 +89,7 @@ function corrigir(subs,i,config)
 	local line = subs[i]
 		if line.class == "dialogue" then
 			if config.comment == "Brasileira" then
-				--corrigir brasileirismos
+				--Corrigir Brasileirismos
 				--A
 				line.text = re.sub(line.text, "\\b([Aa])ção\\b","$1cção")
 				line.text = re.sub(line.text, "\\b([Aa])cessar","$1aceder")
@@ -185,8 +185,8 @@ function corrigir(subs,i,config)
 				line.text = re.sub(line.text, "\\bruim\\b","mau")
 				line.text = re.sub(line.text, "\\bRuim\\b","Mau")
 				--S
-				--line.text = re.sub(line.text, "\\bsua(s?)","a$1 tua$1")
-				--line.text = re.sub(line.text, "\\bSua(s?)","A$1 tua$1")
+				line.text = re.sub(line.text, "\\bsua(s?)","a$1 tua$1")
+				line.text = re.sub(line.text, "\\bSua(s?)","A$1 tua$1")
 				line.text = re.sub(line.text, "([Ss])eqüestrador","$1equestrador")
 				line.text = re.sub(line.text, "([Ss])elecionado","$1eleccionado")
 				--T
@@ -214,7 +214,7 @@ function corrigir(subs,i,config)
 				line.text = re.sub(line.text, "\\b(\\w\\w+)indo\\b","a $1ir")
 				line.text = re.sub(line.text, "\\b(\\w\\w\\w+)ando\\b","a $1ar")
 				line.text = re.sub(line.text, "\\b(\\w+)endo\\b","a $1er")
-			end
+			end -- FIM --Corrigir Brasileirismos
 
 				--remover >> do texto - FUNCIONA
 				line.text = line.text:gsub(">>","")
@@ -249,8 +249,9 @@ function corrigir(subs,i,config)
 				-- Espaços após reticências - FUNCIONA
 				line.text = line.text:gsub("(%.%.%.)([^ ^\\{^])","%1 %2")
 				line.text = line.text:gsub("^({\\%w+}) +(.*) +({\\%w+})$","%1%2%3")
-				line.text = re.sub(line.text, "(-|–|—)([^\\s–—-][\\L])","$1 $2")
-				line.text = re.sub(line.text, "^(\\s+)(-|–|—)([^\\s])","$2 $3")
+				-- Espaços após hífen, meia-risca ou travessão
+				--line.text = re.sub(line.text, "(-|–|—)([^\\s–—-][\\L])","$1 $2")
+				line.text = re.sub(line.text, "^(\\s*)(-|–|—)([^\\s])","$2 $3")
 
 				--Tratar de letras juntas as tags frase{\tag}frase{\tag}frase -> frase {\tag}frase{\tag} frase
 				line.text = line.text:gsub("}(%l)","} %1") -- aplica espaço após todos }

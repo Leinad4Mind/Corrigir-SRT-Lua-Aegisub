@@ -234,7 +234,7 @@ function corrigir(subs,i,config)
 				line.text = line.text:gsub("(%.%.)([%.]+)","%1.")
 
 				-- Espaços após pontuação . ! ? e {} - FUNCIONA
-				line.text = line.text:gsub("([%.%?!,:;])([^ ^%d^\\^{])","%1 %2")
+				line.text = line.text:gsub("([%.%?!,:;])([^ ^%d^\\^\"^{^}^(^)])","%1 %2")
 				line.text = line.text:gsub("(%.)%s(%.)","%1%2") --corrigir . . .
 				line.text = line.text:gsub("(%.)%s(\")","%1%2") --corrigir ."
 

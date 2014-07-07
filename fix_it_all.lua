@@ -234,7 +234,7 @@ function corrigir(subs,i,config)
 				line.text = line.text:gsub("(%.%.)([^ .\\]?)","%1.%2")
 				line.text = line.text:gsub("(%.%.)([%.]+)","%1.")
 
-				-- Espaços após pontuação . ! ? e {} - FUNCIONA
+				-- Espaços após pontuação . ! ? , : ; e {} - FUNCIONA
 				line.text = line.text:gsub("([%.%?%!,:;])(%w+)","%1 %2")
 
 				-- Apaga Duplo Espaço! - FUNCIONA

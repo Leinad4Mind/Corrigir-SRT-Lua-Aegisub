@@ -273,10 +273,10 @@ function corrigir(subs,i,config)
 				line.text = re.sub(line.text, "&H(\\w+).(\\d{3}\\w*)&","&H$1$2&") -- Correcção de &H000000&
 
 				--corrigir "C0itada", ou seja, passar o número 0 no meio de palavras a o - FUNCIONA
-				line.text = re.sub(line.text, "(\\l+)0([^\\}^\\d])","$1o$2")
-				line.text = re.sub(line.text, "(\\l*[^\\d])0(\\l+[^\\d])","$1o$2")
-				line.text = re.sub(line.text, "(\\u+)0([^\\}^\\d])","$1O$2")
-				line.text = re.sub(line.text, "(\\u*[^\\d])0(\\u+[^\\d])","$1O$2")
+				line.text = re.sub(line.text, "(\\l+)0([^\\d^\\}^\\\\])","$1o$2")
+				line.text = re.sub(line.text, "(\\l*[^\\d])0(\\l+[^\\d^\\}^\\\\])","$1o$2")
+				line.text = re.sub(line.text, "(\\u+)0([^\\d^\\}^\\\\])","$1O$2")
+				line.text = re.sub(line.text, "(\\u*[^\\d])0(\\u+[^\\d^\\}^\\\\])","$1O$2")
 
 				--remover ponto final dps de ? ou ! ou , - FUNCIONA
 				line.text = re.sub(line.text, "([\\?!,;:])[,\\.]","$1")

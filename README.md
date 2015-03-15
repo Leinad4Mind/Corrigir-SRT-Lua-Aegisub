@@ -32,7 +32,10 @@ Corrige imensos problemas existentes nas legendas SRT:
 - v8: Se frase termina com reticências e se a próxima se iniciar com minúscula, então adiciona reticências no início da próxima. 
 - v9: Correcção de erros comuns melhorado, com mais casos
 - v9: Correcção da mesóclise dos verbos dar e fazer.
-
+- v1.0 Em vez de se criar a v10 passou a chamar-se Fix It All v1.0
+- Criação de Menus para poder fazer corecção de 2 tipos: Legenda Base Brasileira ou Legenda Base Portuguesa
+- Várias protecções de palavras adicionadas e vários erros corrigidos.
+- v1.1: Correcção de 4 tipos de erro que ainda estavam presentes.
 
 Por fazer
 -----------------

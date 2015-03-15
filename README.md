@@ -36,6 +36,7 @@ Corrige imensos problemas existentes nas legendas SRT:
 - Criação de Menus para poder fazer corecção de 2 tipos: Legenda Base Brasileira ou Legenda Base Portuguesa
 - Várias protecções de palavras adicionadas e vários erros corrigidos.
 - v1.1: Correcção de 4 tipos de erro que ainda estavam presentes.
+- v1.2: Correcção definitiva da v1.1
 
 Por fazer
 -----------------

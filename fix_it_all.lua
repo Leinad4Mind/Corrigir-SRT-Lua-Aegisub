@@ -522,7 +522,7 @@ function corrigir(subs,i,config)
 				line.text = re.sub(line.text, "\\b([iI]nter)-(regn|rog|romp|rup)","$1$2") --Corrigir falhas criadas pela linha de cima
 				-- Sob, sub - Antes de b, h, r: sob-roda; sub-reino;
 				line.text = re.sub(line.text, "\\b([sS]ob|[sS]ub) ?(b|h|r)(\\w\\w+)","$1-$2$3")
-				line.text = re.sub(line.text, "\\b([sS]ob)-(race|racei|raceis|racem|racemos|races|rad|rai|ram|ran|rar|rar|ras|rava|raça|raço|raçá|realim|reamor|reape|reaqu|reavi|recar|recom|reexc|rei|reira|reiro|reirri|reis|reja|relev|relot|reluz|rem|rema|reme|remo|renatur|renome|renum|reolh|repe|repo|repu|repô|repõ|repún|rerre|rerre|res|rescr|ress|resti|reta|rete|retu|reva|revi|revo)\\B","$1$2") --Correcção da falha
+				line.text = re.sub(line.text, "\\b([sS]ob)-(race|racei|raceis|racem|racemos|races|rad|rai|ram|ran|rar|rar|ras|rava|raça|raço|raçá|realim|reamor|reape|reaqu|reavi|recar|recom|reexc|rei|reira|reiro|reirri|reis|reja|relev|relot|reluz|rem|rema|reme|remo|renatur|renome|renum|reolh|repe|repo|repu|repô|repõ|repún|rerre|rerre|res|rescr|ress|resti|reta|rete|retu|reva|revi|revo|rou)\\B","$1$2") --Correcção da falha
 				-- Sem - Quando na sua pronúncia se ouve o ditongo ei: sem-cerimónia;
 				--line.text = re.sub(line.text, "(\\W[sS])(em) ?(abrigo|cerimónia|cerimonioso|fim|justiça|luz|nome|número|papéis|par|razão|sal|sabor|tecto|terra|terreno|vergonha|vergonhice)","$1$2-$3")
 				-- Sota, soto, vice, vizo - Quando o segundo elemento tem vida à parte: sota-almirante; soto-piloto; vice-primeiro-ministro; vizo-rei.

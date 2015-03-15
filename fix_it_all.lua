@@ -13,7 +13,7 @@
 script_name = "FixItAll"
 script_description = "FixItAll! FixItAll! I dont give a shit anymooooore! FixItAll! FixItAll... the errors never bothered me anyway."
 script_author = "Leinad4Mind"
-script_version = "1.2rup)"
+script_version = "1.1"
 
 include("karaskel.lua")
 include("cleantags.lua")
@@ -103,6 +103,7 @@ function corrigir(subs,i,config)
 				line.text = re.sub(line.text, "\\bem uma(s?)","numa$1")
 				line.text = re.sub(line.text, "\\bboy","rapaz")
 				--C
+				line.text = re.sub(line.text, "\\b([Cc])âmera","$1âmara")
 				line.text = re.sub(line.text, "\\b([cC])âncer\\b","$1ancro")
 				line.text = re.sub(line.text, "\\bcara(s?)\\b","gajo$1")
 				line.text = re.sub(line.text, "\\bCara(s?)\\b","Gajo$1")
@@ -110,9 +111,9 @@ function corrigir(subs,i,config)
 				line.text = re.sub(line.text, "\\bcelular\\b","telemóvel")
 				line.text = re.sub(line.text, "\\bCelular\\b","Telemóvel")
 				line.text = re.sub(line.text, "\\b([cC])êu(s?)\\b","$1éu$2")
+				line.text = re.sub(line.text, "\\b([cC])iêntista(s?)\\b","$ientista$2")
 				line.text = re.sub(line.text, "\\b([Cc])oletiv([aio])","$1olectiv$2")
 				line.text = re.sub(line.text, "\\b([Cc])ontat\\B","$1ontact")
-				line.text = re.sub(line.text, "\\b([Cc])âmera","$1âmara")
 				line.text = re.sub(line.text, "\\b([Cc])omitê","$1omité")
 				line.text = re.sub(line.text, "\\b([Cc])ontêiner","$1ontentor")
 				line.text = re.sub(line.text, "\\b([Cc])onosco\\b","$1onnosco")

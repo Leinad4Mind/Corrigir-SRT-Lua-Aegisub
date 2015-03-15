@@ -1,4 +1,4 @@
-Corrigir-SRT-Lua-Aegisub
+Fix-It-All-Lua-Aegisub
 ========================
 
 Corrige imensos problemas existentes nas legendas SRT:
@@ -44,15 +44,15 @@ Como instalar
 
 Load Automático
 
-1. Transferir corrigir_srt.lua
+1. Transferir fixitall.lua
 2. Colocar esse ficheiro na pasta _autoload_ situada dentro da pasta _automation_ que por sua vez está presenta na sua pasta de instalação do aegisub
 
 
 Load Manual
 
-1. Transferir corrigir_srt.lua e guarde-o onde bem desejar
+1. Transferir fixitall.lua e guarde-o onde bem desejar
 2. Com o Aegisub aberto, quando desejar usá-lo terá de clicar em Automatização -> Automatização...
-3. Clicar de seguida em _Adicionar_ e ir ao local onde se encontra o corrigir_srt.lua
+3. Clicar de seguida em _Adicionar_ e ir ao local onde se encontra o fixitall.lua
 
 
 Como usar

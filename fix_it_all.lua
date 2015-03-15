@@ -518,7 +518,7 @@ function corrigir(subs,i,config)
 				line.text = re.sub(line.text, "\\b([cC]ircum) ?(a|e|i|o|u|h|m|n)(\\w\\w+)","$1-$2$3")
 				-- Hiper, inter, super - antes de h, r: hiper-ridículo; inter-hospitalar; super-homem;
 				line.text = re.sub(line.text, "\\b([hH]iper|[iI]nter|[sS]uper) ?([hr]\\w\\w+)","$1-$2")
-				line.text = re.sub(line.text, "\\b([iI]nter-regn|[iI]nter-rog|[iI]nter-romp|[iI]nter-rup)","$1") --Corrigir falhas criadas pela linha de cima
+				line.text = re.sub(line.text, "\\b([iI]nter)-(regn|rog|romp|-rup)","$1$2") --Corrigir falhas criadas pela linha de cima
 				-- Sob, sub - Antes de b, h, r: sob-roda; sub-reino;
 				line.text = re.sub(line.text, "\\b([sS]ob|[sS]ub) ?(b|h|r)(\\w\\w+)","$1-$2$3")
 				line.text = re.sub(line.text, "\\b([sS]ob)-(race|racei|raceis|racem|racemos|races|rad|rai|ram|ran|rar|rar|ras|rava|raça|raço|raçá|realim|reamor|reape|reaqu|reavi|recar|recom|reexc|rei|reira|reiro|reirri|reis|reja|relev|relot|reluz|rem|rema|reme|remo|renatur|renome|renum|reolh|repe|repo|repu|repô|repõ|repún|rerre|rerre|res|rescr|ress|resti|reta|rete|retu|reva|revi|revo)\\B","$1$2") --Correcção da falha

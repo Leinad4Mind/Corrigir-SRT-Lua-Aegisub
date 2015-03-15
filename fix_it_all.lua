@@ -13,7 +13,7 @@
 script_name = "FixItAll"
 script_description = "FixItAll! FixItAll! I dont give a shit anymooooore! FixItAll! FixItAll... the errors never bothered me anyway."
 script_author = "Leinad4Mind"
-script_version = "1.1"
+script_version = "1.2"
 
 include("karaskel.lua")
 include("cleantags.lua")

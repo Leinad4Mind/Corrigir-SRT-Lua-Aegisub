@@ -22,11 +22,7 @@ Corrige imensos problemas existentes nas legendas SRT:
 - v7: Corrige trás por traz e vice-versa. (atrás e detrás incluído) 
 - v7: Corrige policia para polícia e vice-versa. (quase todos os casos)
 - v7:Adiciona espaço após pontuação ( . ! ? ) 
-- v7: Depois de pontuação . ou ? ou ! coloca maiúscula caso não haja. 
-- v7: Corrige trás por traz e vice-versa. (atrás e detrás incluído) 
-- v7: Corrige policia para polícia e vice-versa. (quase todos os casos)
-- v7: Adiciona espaço após pontuação ( . ! ? ) 
-- v7: Depois de pontuação . ou ? ou ! coloca maiúscula caso não haja. 
+- v7: Depois de pontuação . ou ? ou ! coloca maiúscula caso não haja.
 - v8: Corrige"o" por "0" e vicer-versa, problema de OCR 
 - v8: Correcção de erros comuns, com diversos casos adicionados
 - v8: Se frase termina com reticências e se a próxima se iniciar com minúscula, então adiciona reticências no início da próxima. 

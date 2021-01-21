@@ -13,7 +13,7 @@
 script_name = "FixItAll"
 script_description = "FixItAll! FixItAll! I dont give a shit anymooooore! FixItAll! FixItAll... the errors never bothered me anyway."
 script_author = "Leinad4Mind"
-script_version = "1.2"
+script_version = "1.3"
 
 include("karaskel.lua")
 include("cleantags.lua")
@@ -711,11 +711,14 @@ function corrigir(subs,i,config)
 				end
 
 				--concerteza para com certeza
-				line.text = re.sub(line.text, "concerteza","com certeza")
-				line.text = re.sub(line.text, "Concerteza","Com certeza")
+				line.text = re.sub(line.text, "\\bconcerteza\\b","com certeza")
+				line.text = re.sub(line.text, "\\bConcerteza\\b","Com certeza")
 				--Porfavor para Por favor
-				line.text = re.sub(line.text, "porfavor","por favor")
-				line.text = re.sub(line.text, "Porfavor","Por favor")
+				line.text = re.sub(line.text, "\\bporfavor\\b","por favor")
+				line.text = re.sub(line.text, "\\bPorfavor\\b","Por favor")
+				--Colocar vírgula entre por favor
+				line.text = re.sub(line.text, "\\b(\\w+)\\b por favor","$1, por favor")
+				line.text = re.sub(line.text, "\\b([pP]or) favor ","$1 favor, ")
 
 				--trás para traz
 				line.text = re.sub(line.text, "\\b([tT])rás lá","$1raz lá")
@@ -724,17 +727,17 @@ function corrigir(subs,i,config)
 				line.text = re.sub(line.text, "\\b([nN])(ão|unca) trás\\b","$1$2 traz")
 				line.text = re.sub(line.text, "\\b([tT])rás ([ao]s?)","$1raz $2")
 				--traz para trás
-				line.text = re.sub(line.text, "\\b([pP])or traz([ .,?!])","$1or trás$2")
-				line.text = re.sub(line.text, "\\b([pP])ara traz([ .,?!])","$1ara trás$2")
-				line.text = re.sub(line.text, "\\b([dD])e traz([ .,?!])","$1e trás$2")
-				line.text = re.sub(line.text, "\\b([aA])traz([ .,?!])","$1trás$2")
-				line.text = re.sub(line.text, "\\b([dD])e( ?)traz([ .,?!])","$1e$2trás$3")
+				line.text = re.sub(line.text, "\\b([pP])or traz\\b","$1or trás$2")
+				line.text = re.sub(line.text, "\\b([pP])ara traz\\b","$1ara trás$2")
+				line.text = re.sub(line.text, "\\b([aA])traz\\b","$1trás$2")
+				line.text = re.sub(line.text, "\\b([dD])e( ?)traz\\b","$1e$2trás$3")
 
 				--policia para polícia
 				line.text = re.sub(line.text, " ([aAoO]) policia\\b"," $1 polícia$2")
 				line.text = re.sub(line.text, "\\b([uU])m policia\\b","$1m polícia$2")
 				line.text = re.sub(line.text, "\\b([uU])ma policia\\b","$1ma polícia$2")
 				line.text = re.sub(line.text, "\\b([dD])e policia\\b","$1e polícia$2")
+				--polícia para policia
 				line.text = re.sub(line.text, "\\b([qQ])uem polícia\\b","$1uem policia")
 				line.text = re.sub(line.text, "\\b([eE])l([ea]) polícia\\b","$1l$2 policia")
 

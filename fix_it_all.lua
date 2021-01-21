@@ -280,7 +280,7 @@ function corrigir(subs,i,config)
 				line.text = re.sub(line.text, "(\\u+)0([^\\}^\\d])","$1O$2")
 				line.text = re.sub(line.text, "(\\u*)0(\\u+)","$1O$2")
 
-				--remover ponto final dps de ? ou ! ou ,
+				--remover ponto final depois de ? ou ! ou ,
 				line.text = re.sub(line.text, "([\\?!,;:])[,\\.]","$1")
 
 				--Corrigir múltiplos ??->? e !!->! e ?????->? e !!!!!!->!!!
@@ -748,7 +748,7 @@ function corrigir(subs,i,config)
 				line.text = re.sub(line.text, "(\\b)[aàá] (muit[oa]s?|bastantes?|alguma?|alguns|algumas|pouc[ao]s?|um|uns|umas?) (tempos?|anos?|mês|meses|dias?|horas?|minutos?|segundos?)","$1há $2 $3")
 				line.text = re.sub(line.text, "(\\b)[AÀÁ] (muit[oa]s?|bastantes?|alguma?|alguns|algumas|pouc[ao]s?|um|uns|umas?) (tempos?|anos?|mês|meses|dias?|horas?|minutos?|segundos?)","$1Há $2 $3")
 
-				--depois de . ou ? ou ! ter maíscula
+				--depois de . ou ? ou ! ter maiúscula
 				function maiusPont( first, second, rest)
 					return first..second..rest:upper()
 				end
@@ -786,11 +786,11 @@ function corrigir(subs,i,config)
 				local c = string.find(line.text,"\\N")
 				local d = string.find(line.text,"\\i1")
 				local z = string.find(line.text,"\\alpha")
-				if b or bb then --se tiver simbolo musical faz
-					if c and not z then -- se tiver 2 linhas e ainda n tiver sido aplicado entao
-						if d then -- aplica com italico
+				if b or bb then --se tiver símbolo musical faz
+					if c and not z then -- se tiver 2 linhas e ainda n tiver sido aplicado então
+						if d then -- aplica com itálico
 							line.text = line.text:gsub("^({.-}*)♪ ({.-})(.-)\\N(.-)","%1♪ %2%3\\N{\\alpha&HFF&}♪ {\\r}%1%2%4")
-						else -- senao aplica sem italico
+						else -- senão aplica sem itálico
 							line.text = line.text:gsub("^({.-}*)♪ (.-)\\N(.-)","%1♪ %2%3\\N{\\alpha&HFF&}♪ {\\r}%1%3")
 						end
 					end
@@ -813,10 +813,10 @@ function corrigir(subs,i,config)
 	for i=#subs,1,-1 do --#sel = numero total das linhas e vai do fim da legenda pro inicio
 		local line = subs[i]
 		local del = i
-		local dur = 800 -- duracao maxima em ms, que a linha poderá ter
+		local dur = 800 -- duração máxima em ms, que a linha poderá ter
 		if line.class == "dialogue" then
-		line.duration = line.end_time - line.start_time --cria a duracao... senao tinha de carregar o karaskel.preproc_line -.-
-			if line.text ~= "" and line.duration < dur then -- se duracao for menor que 800ms = 0:00:00.80 entao
+		line.duration = line.end_time - line.start_time --cria a duração... senão tinha de carregar o karaskel.preproc_line -.-
+			if line.text ~= "" and line.duration < dur then -- se duração for menor que 800ms = 0:00:00.80 então
 				if i > 1 and i < #subs then -- se não for a 1º linha nem a última então
 					local antes = subs[i-1]		--buscar linha anterior
 					local depois = subs[i+1]	--buscar linha posterior
@@ -830,7 +830,7 @@ function corrigir(subs,i,config)
 					music_actual = line.text:gsub("^({.-}+)? ({.-})(.-)\\N({.-})? ({.-}+)(.-)({.-}) ?$","%3\\N%6")
 					musicas = music_actual == music_depois.."\\N"..music_antes --comparar se a linha actual (line.text) contém ambas as linhas.				
 					if confirmar or musicas then --se realmente contiver então
-						depois.start_time = antes.end_time -- torna os tempos continuos
+						depois.start_time = antes.end_time -- torna os tempos contínuos
 						subs[i+1] = depois --insere o tempo alterado na legenda
 						subs.delete(del) --apaga a linha que mete nojo
 					end

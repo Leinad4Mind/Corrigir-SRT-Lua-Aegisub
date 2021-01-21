@@ -483,7 +483,7 @@ function corrigir(subs,i,config)
 				line.text = re.sub(line.text, "\\b([fF])izes-te(s?)\\b","$1izeste$2")
 				line.text = re.sub(line.text, "\\b([fF])os-te([s\\s])","$1oste$2")
 				line.text = re.sub(line.text, "\\b([eE])ngolis-te([s\\s])","$1ngoliste$2")
-				line.text = re.sub(line.text, "\\b([hH])[aá]( de|-de|s de)(s?)\\b","$1ás-de") --Hás de ou há des -> hás-de
+				line.text = re.sub(line.text, "\\b([hH])[aá](s de|des)\\b","$1ás-de") --Hás de ou há des -> hás-de
 				line.text = re.sub(line.text, "\\b([lL])[êe]s-te([s\\s])","$1este$2")
 				line.text = re.sub(line.text, "\\b([pP])ensas-te([s\\s])","$1ensaste$2")
 				line.text = re.sub(line.text, "\\b([qQ])uer-([ao])", "$1uere-$2") -- quer-o -> quere-o

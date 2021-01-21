@@ -725,8 +725,11 @@ function corrigir(subs,i,config)
 				line.text = re.sub(line.text, "(\\b|\\B)([eE])l([ea])(\\so\\s|\\sa\\s|\\s)?trás(\\b)","$1$2l$3$4traz$5")
 				line.text = re.sub(line.text, "\\b([Tt])rás([mnl])","$1rás-$2")
 				line.text = re.sub(line.text, "\\b([nN])(ão|unca) trás\\b","$1$2 traz")
-				line.text = re.sub(line.text, "\\b([tT])rás ([ao]s?)","$1raz $2")
+				line.text = re.sub(line.text, "\\b([tT])rás ([ao]s?)\\b","$1raz $2")
+				line.text = re.sub(line.text, "\\b([tT])rás (um|uns|uma|umas)\\b","$1raz $2")
+
 				--traz para trás
+				line.text = re.sub(line.text, "\\b(de|por|para) ([tT])raz (um|uns|uma|umas)\\b","$1rás $2") --Reverter Alguns Casos da 729, regex poderia ser optimizado com negação
 				line.text = re.sub(line.text, "\\b([pP])or traz\\b","$1or trás$2")
 				line.text = re.sub(line.text, "\\b([pP])ara traz\\b","$1ara trás$2")
 				line.text = re.sub(line.text, "\\b([aA])traz\\b","$1trás$2")
